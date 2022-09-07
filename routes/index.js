@@ -5,9 +5,13 @@ router.get('/sayhi', (req, res, next) => {
   res.json('hi');
 });
 
+router.get('/', (req, res, next) => {
+  res.json('Wellcome to your local veterinarian 🐶');
+});
+
 /**
- * Add options to 
-*/
+ * Add options to
+ */
 router.options('/appointment', (req, res, next) => {
   //set header before response
   res.header({

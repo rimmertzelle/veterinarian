@@ -7,6 +7,7 @@ router.get('/sayhi', (req, res, next) => {
   res.json('hi');
 });
 
+// root level route
 router.get('/', (req, res, next) => {
   res.json('Welcome to your local veterinarian 🐶');
 });
@@ -16,7 +17,7 @@ router.get('corsenabled', cors(), (req, res, next) => {
 });
 
 /**
- * Add options to
+ * all appointments routes
  */
 router.options('/appointments', (req, res, next) => {
   //set header before response
@@ -30,6 +31,7 @@ router.options('/appointments', (req, res, next) => {
   res.sendStatus(200);
 });
 
+// get a collection of all the appointments and ou can use a query
 router.get('/appointments', (req, res, next) => {
   res.header({
     'Content-type': 'application/json',
@@ -50,24 +52,34 @@ router.get('/appointments', (req, res, next) => {
   });
 });
 
+// get an individual appointment
 router.get('/appointments/:id', (req, res, next) => {
   res.json({
-    client: `nice url to client with id ${req.params.id}`,
+    client: `🐩 nice url to client with id ${req.params.id}`,
     date: '10-11-22',
     time: '10.10',
     url: 'nice url pointing to itself',
   });
 });
+
+// post a route using the middleware for reading the body
 router.post('/appointments', (req, res, next) => {
   const client = req.body.client;
   const date = req.body.date;
   const time = req.body.time;
   res.json({
     title: 'appointment added',
-    message: `Appointment for ${client} is made on ${date} at ${time}`,
+    message: `📅 Appointment for ${client} is made on ${date} at ${time}`,
   });
 });
 
-router.delete('/appointments', (req, res, next) => {});
+// delete an individual appointment
+router.delete('/appointments/:id', (req, res, next) => {
+  const appointment = req.params.appointment;
+  res.json({
+    title: 'deleted',
+    message: `oops ${appointment} was deleted accidentally 🥺`
+  })
+});
 
 export default router;

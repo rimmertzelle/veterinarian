@@ -1,11 +1,12 @@
 import express from 'express';
 import indexRouter from './routes/index.js';
 
-// const bodyParser = require('body-parser');
-
 const app = express();
 
-// app.use(bodyParser.json());
+// support json encoded and url-encoded bodies, mainly used for post
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use('/', indexRouter);
 
 app.listen(3010, () => {

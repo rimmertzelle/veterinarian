@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
   res.json('Welcome to your local veterinarian 🐶');
 });
 
-router.get('corsenabled', cors(), (req, res, next) => {
+router.get('/corsenabled', cors(), (req, res, next) => {
   res.json('Wow this one is cors enabled');
 });
 

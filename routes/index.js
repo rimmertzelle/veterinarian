@@ -6,8 +6,12 @@ router.get('/sayhi', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-  res.json('Wellcome to your local veterinarian 🐶');
+  res.json('Welcome to your local veterinarian 🐶');
 });
+
+router.get('corsenabled', cors(), (res, res, next)=>{
+  res.json('Wow this one is cors enabled');
+})
 
 /**
  * Add options to

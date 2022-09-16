@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 const router = express.Router();
+import { myLogger } from '../middleware/logger.js';
 
 // routes
 router.get('/sayhi', (req, res, next) => {
@@ -32,8 +33,8 @@ router.options('/appointments', (req, res, next) => {
 });
 
 // get a collection of all the appointments and ou can use a query
-router.get('/appointments', (req, res, next) => {
-  res.header({
+router.get('/appointments', myLogger, (req, res, next) => {
+  res.set({
     'Content-type': 'application/json',
   });
   res.json({
@@ -67,10 +68,18 @@ router.post('/appointments', (req, res, next) => {
   const client = req.body.client;
   const date = req.body.date;
   const time = req.body.time;
-  res.json({
-    title: 'appointment added',
-    message: `📅 Appointment for ${client} is made on ${date} at ${time}`,
-  });
+  if (client != undefined && date != undefined && time != undefined) {
+    res.json({
+      title: 'appointment added',
+      message: `📅 Appointment for ${client} is made on ${date} at ${time}`,
+    });
+  } else {
+    res.status(422);
+    res.json({
+      title: 'cannot add appointment',
+      message: `You need to set client, date and time`,
+    });
+  }
 });
 
 // delete an individual appointment
@@ -78,8 +87,8 @@ router.delete('/appointments/:id', (req, res, next) => {
   const appointment = req.params.appointment;
   res.json({
     title: 'deleted',
-    message: `oops ${appointment} was deleted accidentally 🥺`
-  })
+    message: `oops ${appointment} was deleted accidentally 🥺`,
+  });
 });
 
 export default router;
